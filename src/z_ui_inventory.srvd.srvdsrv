@@ -1,0 +1,4 @@
+@EndUserText.label: 'Inventory Services Definition'
+define service Z_ui_inventory {
+  expose z_c_inventory;
+}

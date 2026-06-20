@@ -1,0 +1,44 @@
+managed implementation in class zbp_i_inventory unique;
+strict ( 2 );
+
+define behavior for z_i_inventory alias Inventory
+persistent table zdp_inventory
+lock master
+authorization master ( instance )
+//etag master lastchangeat
+{
+  create(authorization : global);
+  update;
+  delete;
+
+  field ( readonly : update ) ProductId;
+  field ( readonly  ) lastchangeat;
+
+  action Trigger_determine_action result[1] $self;
+
+  determine action calc_total
+  {
+    determination ( always ) totalCalc;
+    validation checkQuantity;
+  }
+
+  determination totalCalc on save
+  {
+    field lastchangeat; create;
+  }
+
+  validation checkQuantity on save
+  {
+   field Quantity;
+  }
+
+  mapping for zdp_inventory {
+    ProductId = product_id;
+    ProductName = product_name;
+    Quantity = quantity;
+    UnitPrice = unit_price;
+    totalvalue = total_value;
+    CurrencyCode = currency_code;
+    lastchangeat= last_change_at;
+  }
+}

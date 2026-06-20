@@ -1,0 +1,12 @@
+projection;
+strict ( 2 );
+
+define behavior for z_c_inventory alias Inventory
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Trigger_determine_action;
+  use action calc_total;
+}
